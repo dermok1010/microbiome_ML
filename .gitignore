@@ -3,3 +3,5 @@ data/
 # Ignore all CSV and TSV files anywhere in the project
 *.csv
 *.tsv
+*.err
+*.out
