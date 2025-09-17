@@ -5,3 +5,7 @@ data/
 *.tsv
 *.err
 *.out
+.ipynb_checkpoints/
+results/
+calibration_outputs/
+Untitled*.ipynb

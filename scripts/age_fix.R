@@ -4,7 +4,7 @@
 
 og_micro_ct <- read.csv("/home/dermot.kelly/Dermot_analysis/Phd/Paper_2/microbiome_ml/data/ct_sensory_micro.csv")
 
-g <- read.csv("/home/dermot.kelly/Dermot_analysis/Phd/Paper_2/microbiome_ml/data/full_growings_microbiome.csv")
+g <- read.csv("/home/dermot.kelly/Dermot_analysis/Phd/Paper_2/microbiome_ml/data/CLR_micro.csv")
 
 # How many rows
 nrow(g)
@@ -37,4 +37,4 @@ g <- g %>%
   )
 
 
-write.csv(g, "/home/dermot.kelly/Dermot_analysis/Phd/Paper_2/microbiome_ml/data/full_growings_microbiome.csv", row.names = F)
+write.csv(g, "/home/dermot.kelly/Dermot_analysis/Phd/Paper_2/microbiome_ml/data/CLR_micro.csv", row.names = F)

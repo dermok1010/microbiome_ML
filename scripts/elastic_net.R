@@ -7,7 +7,12 @@ library(rpart.plot)
 
 data <- read.csv("/home/dermot.kelly/Dermot_analysis/Phd/Paper_2/microbiome_ml/data/CLR_micro.csv")
 
-micro_predictors <- data[, 354:ncol(data)]
+for (i in seq_along(data)) {
+  cat("Column", i, ":", colnames(data)[i], "\n")
+}
+
+
+micro_predictors <- data[, 344:ncol(data)]
 
 View(micro_predictors)
 

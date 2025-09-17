@@ -1,5 +1,5 @@
 
-install.packages("sommer")
+#install.packages("sommer")
 library(sommer)
 
 # Load phenotype data
@@ -32,12 +32,12 @@ K <- K[pheno$ANI_ID, pheno$ANI_ID]
 # Fit the sommer model
 mod <- mmer(
   ch4_g_day2_1v3 ~ SEX + Age_in_months + weight + main_breed,
-  random = ~ vsr(ANI_ID, Gu = K),
+  random = ~ breeder + vsr(ANI_ID, Gu = K),
   data = pheno
 )
 
 
-mod$fitted
+summary(mod)
 
 ## Feature selection
 # Fit the sommer model
@@ -202,7 +202,48 @@ print(results_summary)
 
 
 
+############################
 
+### PCA
+
+############################
+
+
+library(vegan)
+X <- as.matrix(pheno[, 354:ncol(pheno)]) # your CLR table
+dist <- vegdist(X, method="euclidean")
+ord <- cmdscale(dist, k=2)  # PCoA
+plot(ord, col=factor(pheno$breeder), pch=19)
+
+legend("topright",
+       legend = levels(factor(pheno$breeder)),
+       col = 1:length(levels(factor(pheno$breeder))),
+       pch = 19,
+       cex = 0.8,     # shrink labels a bit
+       bty = "n")     # no legend box
+
+adonis2(X ~ breeder, data=pheno, method="euclidean", permutations=999)
+
+
+##################################
+
+### Random-slope mixed model
+
+
+##################################
+
+library(lme4)
+
+# e.g. use top microbiome PCs to reduce dimensionality
+pcs <- prcomp(pheno[,354:ncol(pheno)], scale.=TRUE)$x[,1:5]
+pheno <- cbind(pheno, pcs)
+
+# Random intercept + random slopes for PC1 & PC2 by breeder
+m <- lmer(ch4_g_day2_1v3 ~ SEX + Age_in_months + weight + main_breed +
+            PC1 + PC2 + (PC1 + PC2 | breeder), data=pheno)
+
+
+VarCorr(m)
 
 
 
